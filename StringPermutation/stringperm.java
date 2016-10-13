@@ -6,30 +6,30 @@ class stringperm {
   }
 
   private static void permute(String input, int l, int r) {
-    if(input.isEmpty()) {
-      return ;
-    } else {
+    if(! input.isEmpty()) {
       char[] chars = input.toCharArray();
       _permute(chars, l, r);
     }
   }
-  
+
   private static void _permute(char[] input, int l, int r) {
     if(l == r) {
       System.out.println(new String(input));
     } else {
       for(int i=l; i <= r ; i++) {
-        // swap the two values
-        char temp = input[l];
-        input[l] = input[i];
-        input[i] = temp;
-        // find all permutations in the next position
-        _permute(input, i+1, r);
-        // swap the two values
-        char temp2 = input[l];
-        input[l] = input[i];
-        input[i] = temp2;
+        // place the current number at the begining of the array
+        swap(input, i, l);
+        // find all permutations for the remainder of the array
+        _permute(input, l+1, r);
+        // backtrack
+        swap(input, i, l);
       }
     }
+  }
+
+  public static void swap(char[] input, int i, int j) {
+    char temp = input[i];
+    input[i] = input[j];
+    input[j] = temp;
   }
 }
